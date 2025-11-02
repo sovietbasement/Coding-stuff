@@ -1,0 +1,58 @@
+import java.util.Scanner;
+
+public class AdventureGame {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("====================================");
+        System.out.println("WELCOME TO THE TEXT ADVENTURE GAME!");
+        System.out.println("====================================");
+        System.out.println("You find yourself in a dark forest. There are paths to the LEFT and RIGHT.");
+
+        boolean gameRunning = true;
+        while (gameRunning) {
+            System.out.print("Which direction do you choose? (left/right/exit): ");
+            String choice = scanner.nextLine().toLowerCase();
+
+            switch (choice) {
+                case "left":
+                    System.out.println("You encounter a wild bear! What do you do?");
+                    System.out.print("(fight/run): ");
+                    String action1 = scanner.nextLine().toLowerCase();
+                    if (action1.equals("fight")) {
+                        System.out.println("The bear overpowers you. Game Over!");
+                        gameRunning = false;
+                    } else {
+                        System.out.println("You run away safely and find a treasure chest!");
+                    }
+                    break;
+
+                case "right":
+                    System.out.println("You find a peaceful river with a boat. Do you want to cross?");
+                    System.out.print("(yes/no): ");
+                    String action2 = scanner.nextLine().toLowerCase();
+                    if (action2.equals("yes")) {
+                        System.out.println("You safely cross the river and discover a hidden village. You win!");
+                        gameRunning = false;
+                    } else {
+                        System.out.println("You stay by the river, but night falls. Game Over!");
+                        gameRunning = false;
+                    }
+                    break;
+
+                case "exit":
+                    System.out.println("You chose to exit the game. Goodbye!");
+                    gameRunning = false;
+                    break;
+
+                default:
+                    System.out.println("Invalid choice. Try again!");
+            }
+
+            System.out.println("====================================");
+        }
+
+        scanner.close();
+    }
+}
