@@ -1,0 +1,56 @@
+# Number Guessing Game in R
+
+print_line <- function() {
+  cat(rep("=", 50), "\n", sep = "")
+}
+
+intro <- function() {
+  print_line()
+  cat("WELCOME TO THE NUMBER GUESSING GAME!\n")
+  cat("Try to guess the secret number between 1 and 100.\n")
+  cat("You have 10 attempts to get it right!\n")
+  print_line()
+}
+
+play_game <- function() {
+  number <- sample(1:100, 1)  # secret number
+  attempts <- 10
+
+  for (i in 1:attempts) {
+    guess <- as.integer(readline(prompt = paste("Attempt", i, "/", attempts, "- Enter your guess: ")))
+    
+    if (is.na(guess) || guess < 1 || guess > 100) {
+      cat("Invalid input! Please enter a number between 1 and 100.\n")
+      i <- i - 1
+      next
+    }
+
+    if (guess < number) {
+      cat("Too low! Try a higher number.\n")
+    } else if (guess > number) {
+      cat("Too high! Try a lower number.\n")
+    } else {
+      print_line()
+      cat("🎉 Congratulations! You guessed the number", number, "correctly!\n")
+      print_line()
+      return()
+    }
+  }
+  print_line()
+  cat("💀 Game Over! The secret number was", number, "\n")
+  print_line()
+}
+
+main <- function() {
+  intro()
+  repeat {
+    play_game()
+    again <- readline(prompt = "Do you want to play again? (yes/no): ")
+    if (tolower(again) != "yes" && tolower(again) != "y") {
+      cat("Thanks for playing! Goodbye!\n")
+      break
+    }
+  }
+}
+
+main()
