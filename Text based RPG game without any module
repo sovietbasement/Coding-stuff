@@ -1,0 +1,86 @@
+# Text-based RPG Battle Game (No Modules)
+
+def print_line():
+    print("="*50)
+
+def show_stats(player, enemy):
+    print_line()
+    print(f"{player['name']} - HP: {player['hp']}/{player['max_hp']}")
+    print(f"{enemy['name']}  - HP: {enemy['hp']}/{enemy['max_hp']}")
+    print_line()
+
+def player_attack(player, enemy):
+    damage = player['attack']
+    enemy['hp'] -= damage
+    if enemy['hp'] < 0:
+        enemy['hp'] = 0
+    print(f"{player['name']} attacks {enemy['name']} for {damage} damage!")
+
+def enemy_attack(player, enemy):
+    damage = enemy['attack']
+    player['hp'] -= damage
+    if player['hp'] < 0:
+        player['hp'] = 0
+    print(f"{enemy['name']} attacks {player['name']} for {damage} damage!")
+
+def player_heal(player):
+    heal_amount = 10
+    player['hp'] += heal_amount
+    if player['hp'] > player['max_hp']:
+        player['hp'] = player['max_hp']
+    print(f"{player['name']} heals for {heal_amount} HP!")
+
+def battle():
+    player = {"name": "Hero", "hp": 50, "max_hp": 50, "attack": 12}
+    enemy = {"name": "Goblin", "hp": 40, "max_hp": 40, "attack": 8}
+
+    print("A wild Goblin appears!")
+    show_stats(player, enemy)
+
+    while player['hp'] > 0 and enemy['hp'] > 0:
+        print("Choose an action:")
+        print("1. Attack")
+        print("2. Heal")
+        print("3. Special Attack")
+        choice = input("> ")
+
+        if choice == "1":
+            player_attack(player, enemy)
+        elif choice == "2":
+            player_heal(player)
+        elif choice == "3":
+            damage = player['attack'] * 2
+            enemy['hp'] -= damage
+            if enemy['hp'] < 0:
+                enemy['hp'] = 0
+            print(f"{player['name']} uses a SPECIAL ATTACK on {enemy['name']} for {damage} damage!")
+        else:
+            print("Invalid choice! Turn skipped.")
+
+        if enemy['hp'] > 0:
+            enemy_attack(player, enemy)
+
+        show_stats(player, enemy)
+
+    if player['hp'] > 0:
+        print("🎉 You defeated the Goblin! Victory!")
+    else:
+        print("💀 You were defeated... Game Over.")
+
+def main():
+    print("=== WELCOME TO PYTHON RPG ===")
+    print("You are the Hero on a quest to defeat monsters!")
+    while True:
+        print("\nMenu:")
+        print("1. Start Battle")
+        print("2. Exit")
+        choice = input("> ")
+        if choice == "1":
+            battle()
+        elif choice == "2":
+            print("Thanks for playing! Goodbye!")
+            break
+        else:
+            print("Invalid choice. Try again.")
+
+main()
