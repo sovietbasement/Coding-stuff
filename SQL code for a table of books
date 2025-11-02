@@ -1,0 +1,56 @@
+-- =====================================================
+-- Sample SQL Script: Simple Library Database
+-- =====================================================
+
+-- 1. Create tables
+CREATE TABLE Authors (
+    AuthorID INT PRIMARY KEY,
+    Name VARCHAR(100),
+    Country VARCHAR(50)
+);
+
+CREATE TABLE Books (
+    BookID INT PRIMARY KEY,
+    Title VARCHAR(100),
+    AuthorID INT,
+    YearPublished INT,
+    Price DECIMAL(8,2),
+    FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID)
+);
+
+-- 2. Insert sample data into Authors
+INSERT INTO Authors (AuthorID, Name, Country) VALUES
+(1, 'J.K. Rowling', 'UK'),
+(2, 'George R.R. Martin', 'USA'),
+(3, 'Haruki Murakami', 'Japan');
+
+-- 3. Insert sample data into Books
+INSERT INTO Books (BookID, Title, AuthorID, YearPublished, Price) VALUES
+(1, 'Harry Potter and the Sorcerer''s Stone', 1, 1997, 19.99),
+(2, 'Harry Potter and the Chamber of Secrets', 1, 1998, 20.99),
+(3, 'A Game of Thrones', 2, 1996, 25.50),
+(4, 'Norwegian Wood', 3, 1987, 15.75);
+
+-- 4. Simple SELECT queries
+-- List all authors
+SELECT * FROM Authors;
+
+-- List all books
+SELECT * FROM Books;
+
+-- Join books with authors
+SELECT b.Title, a.Name AS Author, b.YearPublished, b.Price
+FROM Books b
+JOIN Authors a ON b.AuthorID = a.AuthorID;
+
+-- Filter books by price
+SELECT Title, Price FROM Books WHERE Price > 20;
+
+-- Count books per author
+SELECT a.Name, COUNT(b.BookID) AS TotalBooks
+FROM Authors a
+LEFT JOIN Books b ON a.AuthorID = b.AuthorID
+GROUP BY a.Name;
+
+-- Order books by YearPublished
+SELECT Title, YearPublished FROM Books ORDER BY YearPublished DESC;
